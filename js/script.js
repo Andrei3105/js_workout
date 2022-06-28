@@ -157,7 +157,7 @@ addForm.addEventListener('submit', (event)=>{
             newFilm = `${newFilm.substring(0, 22)}...`;
         }
     if(favorite){
-        console.log("Lj,fdkztv ваш любимый фильм")ж
+        console.log("Добавляем ваш любимый фильм");
     }
         movieDB.movies.push(newFilm);
         sortArr(movieDB.movies);
