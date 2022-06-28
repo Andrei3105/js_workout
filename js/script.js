@@ -135,6 +135,53 @@
 // };
 
 // Работа с индексным файлом
+'use strict';
+
+document.addEventListener('DOMContentLoaded', () =>{
+
+const deleteRecklames = document.querySelectorAll(".promo__adv > img"),
+    genre = document.querySelector('.promo__genre'),
+    poster = document.querySelector('.promo__bg'),
+    movieList = document.querySelector('.promo__interactive-list'),
+    addForm = document.querySelector('form.add'),
+    addInput = addForm.querySelector('.adding__input'),
+    checkbox = addForm.querySelector('[type = "checkbox"]');
+
+addForm.addEventListener('submit', (event)=>{
+    event.preventDefault();
+
+    let newFilm = addInput.value;
+    const favorite = checkbox.checked;
+    if(newFilm){
+        if(newFilm.length > 21){
+            newFilm = `${newFilm.substring(0, 22)}...`;
+        }
+    if(favorite){
+        console.log("Lj,fdkztv ваш любимый фильм")ж
+    }
+        movieDB.movies.push(newFilm);
+        sortArr(movieDB.movies);
+        createMovieList(movieDB.movies, movieList);
+    }
+    
+    event.target.reset();
+});
+
+const deleteAdv = (arr) => {
+    arr.forEach((item, value)=>{
+        item.remove();
+    });
+};
+    
+
+const makeChanges = () => {
+    genre.textContent = 'Драма';
+
+    poster.style.backgroundImage = 'url("img/bg.jpg")';
+};
+
+
+
 const movieDB = {
     movies: [
         "Логан",
@@ -144,4 +191,36 @@ const movieDB = {
         "Скотт Пилигрим против..."
     ]
 };
+    const sortArr = (arr) => {
+        arr.sort();
+    };
+    
+    
+
+    function createMovieList (films, parent){
+        parent.innerHTML = "";
+        sortArr(films);
+        films.forEach((items, value)=>{
+            parent.innerHTML += `<li class="promo__interactive-item">${value + 1} ${items}
+                <div class="delete"></div>
+            </li>
+        `;
+        });
+
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', ()=>{
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+                createMovieList(films, parent);
+            }) 
+        });
+    };
+    
+    
+
+    deleteAdv(deleteRecklames);
+    makeChanges();
+    createMovieList(movieDB.movies, movieList);
+
+});
 
